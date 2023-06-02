@@ -1,10 +1,9 @@
 #ifndef MANGO_H
 #define MANGO_H
 
-
 #define G 9.8
-#define DT 1
-#define THETA0 3.1416/3
+#define DT 0.7
+#define THETA0 3.1416/2
 
 #include <QObject>
 #include <QGraphicsItem>
@@ -33,6 +32,8 @@ public:
 
 
     void pendulo();
+    void seguirMono(float xMono, float yMono);
+    //void posiciones();
 
 };
 #endif // MANGO_H

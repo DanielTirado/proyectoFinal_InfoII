@@ -10,6 +10,7 @@
 #include <QMouseEvent>
 
 #include "mango.h"
+#include "mono.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -37,6 +38,7 @@ private:
     QTimer *timer;
 
     QList <mango*> mangos;
+    QList <mono*> monos;
 
     void jugar();
 

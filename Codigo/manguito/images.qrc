@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>images/fondo_arbol.png</file>
+        <file>images/fondo_arbol_redimension.png</file>
+    </qresource>
+</RCC>

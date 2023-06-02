@@ -30,12 +30,17 @@ void mango::pendulo()
 {
     static float t = 0;
     t += DT;
-    float w = sqrt(G/L);
-    float angulo = THETA0 * cos(w*t);
+    float w = sqrt(G/L);    //Frecuencia angular
+    float angulo = THETA0 * cos(w*t); //Angulo en funcion del tiempo
 
-    posx = L * sin(angulo);
-    posy = L * cos(angulo);
+    float X = posx + L * sin(angulo);
+    float Y = posy + L * cos(angulo);
 
-    setPos(posx, posy);
+    setPos(X, Y);
+}
+
+void mango::seguirMono(float xMono, float yMono)
+{
+    setPos(xMono, yMono+10);
 }
 

@@ -10,8 +10,11 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    easyMode = new QGraphicsScene(0,0,420,466);
+    easyMode = new QGraphicsScene(550,170,420,466);
+    easyMode->setBackgroundBrush(QBrush(QImage(":/images/fondo_arbol_redimension.png")));
     ui->graphicsView->setScene(easyMode);
+    //easyMode->addRect(easyMode->sceneRect());
+
 
 
     timer = new QTimer(this);
@@ -28,13 +31,17 @@ MainWindow::~MainWindow()
 
 void MainWindow::Animar()
 {
+    //monos[0]->saltar();
     mangos[0]->pendulo();
 }
 
 void MainWindow::jugar()
 {
-    mangos.append(new mango(20,20,10,10,10));
+    mangos.append(new mango(300,150,20,25,40));
     easyMode->addItem(mangos.last());
+
+    monos.append(new mono(200,200,40,20,10,10));
+    easyMode->addItem(monos.last());
 }
 
 /*void MainWindow::mouseMoveEvent(QMouseEvent *event)

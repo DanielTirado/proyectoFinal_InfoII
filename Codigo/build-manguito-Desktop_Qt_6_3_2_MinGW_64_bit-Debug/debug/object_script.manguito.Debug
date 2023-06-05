@@ -1,0 +1,10 @@
+debug/main.o
+debug/mainwindow.o
+debug/mango.o
+debug/mira.o
+debug/mono.o
+debug/qrc_images.o
+debug/moc_mainwindow.o
+debug/moc_mango.o
+debug/moc_mira.o
+debug/moc_mono.o

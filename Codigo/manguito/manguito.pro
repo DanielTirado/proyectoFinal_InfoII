@@ -13,15 +13,13 @@ SOURCES += \
     mainwindow.cpp \
     mango.cpp \
     mira.cpp \
-    mono.cpp \
-    piedra.cpp
+    mono.cpp
 
 HEADERS += \
     mainwindow.h \
     mango.h \
     mira.h \
-    mono.h \
-    piedra.h
+    mono.h
 
 FORMS += \
     mainwindow.ui

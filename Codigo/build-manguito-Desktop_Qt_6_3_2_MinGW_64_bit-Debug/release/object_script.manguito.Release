@@ -1,0 +1,10 @@
+release/main.o
+release/mainwindow.o
+release/mango.o
+release/mira.o
+release/mono.o
+release/qrc_images.o
+release/moc_mainwindow.o
+release/moc_mango.o
+release/moc_mira.o
+release/moc_mono.o

@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 #include <QGraphicsScene>
+#include <QGraphicsRectItem>
+#include <QGraphicsLineItem>
 #include <QTimer>
 #include <iostream>
 #include <fstream>
@@ -11,6 +13,7 @@
 
 #include "mango.h"
 #include "mono.h"
+#include "mira.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -37,13 +40,16 @@ private:
 
     QTimer *timer;
 
+
+    mira* miraCursor;
+    QGraphicsRectItem* centroMira;
     QList <mango*> mangos;
     QList <mono*> monos;
+    QList <QGraphicsRectItem*> ramas;
 
     void jugar();
-
-    //void mouseMoveEvent(QMouseEvent *event);
-    //void mousePressEvent(QMouseEvent *event);
+    void mouseMoveEvent(QMouseEvent *event);
+    void mousePressEvent(QMouseEvent *event);
 };
 
 #endif // MAINWINDOW_H

@@ -26,7 +26,8 @@ public:
     QTimer *timerMono;
     QPixmap *pixmap;
 
-    //void saltar();
+    void saltar();
+    void caidaLibre();
 };
 
 #endif // MONO_H

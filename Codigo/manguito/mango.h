@@ -2,7 +2,7 @@
 #define MANGO_H
 
 #define G 9.8
-#define DT 0.7
+#define DT 0.1
 #define THETA0 3.1416/2
 
 #include <QObject>
@@ -18,22 +18,27 @@ class mango : public QObject, public QGraphicsItem
     Q_INTERFACES(QGraphicsItem)
 
 private:
-    float posx, posy, ancho, alto, L;
+    float posx, posy, ancho, alto, L, vy;
 
 public:
     mango();
-    mango(float _x, float _y, float _ancho, float _alto, float _l);
+    mango(float _x, float _y, float _ancho,
+          float _alto, float _l);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     QTimer *timerMango;
-    QPixmap *pixmap;
 
+    bool tambalear;
 
+    void setX(float value);
+    void setY(float value);
+
+    void caidaLibre();
     void pendulo();
     void seguirMono(float xMono, float yMono);
-    //void posiciones();
+    void posiciones();
 
 };
 #endif // MANGO_H

@@ -24,17 +24,17 @@ QRectF mono::boundingRect() const
 
 void mono::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->setBrush(Qt::darkGreen);
-    painter->drawEllipse(boundingRect());
+    painter->setBrush(Qt::darkYellow);
+    painter->drawRect(boundingRect());
 }
 
-/*void mono::saltar()
+void mono::saltar()
 {
     //Calcular velocidades
     vy = vy + (G * DT);
 
-    posx = posx + (vx * DT);
-    posy = posy + (vy * DT) + (0.5 * G * pow(DT,2));
+    posx = posx + (-vx * DT);
+    posy = posy + (-vy * DT) + (0.5 * G * pow(DT,2));
 
     setPos(posx, posy);
-}*/
+}

@@ -6,14 +6,17 @@ mono::mono()
 
 }
 
-mono::mono(float _x, float _y, float _vx, float _vy, float width, float high)
+mono::mono(float _x, float _y, float width, float high)
 {
     posx = _x;
     posy = _y;
     ancho = width;
     alto = high;
-    vx = _vx;
-    vy = _vy;
+    v0 = 80.0;
+    angulo = M_PI * 85.0 / 180.0;
+    vx = v0 * cos(angulo)+10;
+    flagSaltar = true;
+    t = 0;
     setPos(posx, posy);
 }
 
@@ -30,11 +33,14 @@ void mono::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWid
 
 void mono::saltar()
 {
-    //Calcular velocidades
-    vy = vy + (G * DT);
+    if (flagSaltar){
 
-    posx = posx + (-vx * DT);
-    posy = posy + (-vy * DT) + (0.5 * G * pow(DT,2));
+        t += DT*3;
 
-    setPos(posx, posy);
+        vy = v0 * sin(angulo) - G * t;
+        float X = posx + vx * t;
+        float Y = posy - vy * t - (0.5 * G * t * t);
+
+        setPos(X, Y);
+    }
 }

@@ -6,15 +6,24 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsLineItem>
 #include <QTimer>
+#include <QList>
+
 #include <iostream>
 #include <fstream>
+#include <random>
 #include <string>
 #include <QMouseEvent>
 
-#include "mango.h"
-#include "mono.h"
-#include "mira.h"
+//LLevar tiempo
+#include <chrono>
+#include <thread>
+#include <ctime>
 
+#include <mango.h>
+#include <mono.h>
+#include <mira.h>
+
+using namespace std;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -48,6 +57,7 @@ private:
     QList <QGraphicsRectItem*> ramas;
 
     void jugar();
+    void drawNivel(char level);
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);
 };

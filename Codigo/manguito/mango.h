@@ -18,12 +18,12 @@ class mango : public QObject, public QGraphicsItem
     Q_INTERFACES(QGraphicsItem)
 
 private:
-    float posx, posy, ancho, alto, L, vy;
+    float posx, posy, ancho, alto, L, vy, dt, t_total;
 
 public:
     mango();
     mango(float _x, float _y, float _ancho,
-          float _alto, float _l);
+          float _alto, float _l, float _dt);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
@@ -38,7 +38,6 @@ public:
     void caidaLibre();
     void pendulo();
     void seguirMono(float xMono, float yMono);
-    void posiciones();
 
 };
 #endif // MANGO_H

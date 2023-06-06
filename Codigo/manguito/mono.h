@@ -14,17 +14,22 @@ class mono : public QObject, public QGraphicsItem
     Q_INTERFACES(QGraphicsItem)
 
 private:
-    float posx, posy, vx, vy, ancho, alto;
+    float posx, posy, vx, vy, ancho, alto, v0, angulo, t;
 
 public:
     mono();
-    mono(float _x, float _y, float width, float high, float _vx, float _vy);
+    mono(float _x, float _y, float width, float high);
 
     QRectF boundingRect() const;
     void paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget);
 
     QTimer *timerMono;
     QPixmap *pixmap;
+
+    bool flagSaltar;
+
+    void setX(float value);
+    void setY(float value);
 
     void saltar();
     void caidaLibre();

@@ -5,7 +5,7 @@ mango::mango()
 {
 }
 
-mango::mango(float _x, float _y, float _ancho, float _alto, float _l)
+mango::mango(float _x, float _y, float _ancho, float _alto, float _l, float _dt)
 {
     posx = _x;
     posy = _y;
@@ -15,6 +15,8 @@ mango::mango(float _x, float _y, float _ancho, float _alto, float _l)
     setPos(posx, posy);
     tambalear = true;
     vy = 120;
+    t_total=0;
+    dt = _dt;
 
 }
 
@@ -43,22 +45,20 @@ void mango::setY(float value)
 void mango::caidaLibre()
 {
     static float Y=0, V=0;
-    V = vy + G*DT;
-    Y = posy + V*DT + (0.5*G*pow(DT,2));
+    V = vy + G*0.15;
+    Y = posy + V*0.15 + (0.5*G*pow(DT,2));
     posy = Y;
 
     setPos(posx, Y);
-
 
 }
 
 void mango::pendulo()
 {
     if (tambalear){
-    static float t = 0;
-    t += DT;
+    t_total += dt;
     float w = sqrt(G/L);    //Frecuencia angular
-    float angulo = THETA0 * cos(w*t); //Angulo en funcion del tiempo
+    float angulo = THETA0 * cos(w*t_total); //Angulo en funcion del tiempo
 
     float X = posx + L * sin(angulo);
     float Y = posy + L * cos(angulo);

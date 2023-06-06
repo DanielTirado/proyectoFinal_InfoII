@@ -130,8 +130,10 @@ release/qrc_images.cpp: ../manguito/images.qrc \
 		C:/Qt/6.3.2/mingw_64/bin/rcc.exe \
 		../manguito/images/fondo_arbol.png \
 		../manguito/images/mango.png \
+		../manguito/images/roca_sprites_redimension.png \
 		../manguito/images/fondo_arbol_redimension.png \
-		../manguito/images/mira.png
+		../manguito/images/mira.png \
+		../manguito/images/roca_sprites.png
 	C:\Qt\6.3.2\mingw_64\bin\rcc.exe -name images --no-zstd ..\manguito\images.qrc -o release\qrc_images.cpp
 
 compiler_moc_predefs_make_all: release/moc_predefs.h
@@ -298,6 +300,7 @@ release/moc_mainwindow.cpp: ../manguito/mainwindow.h \
 		../manguito/mono.h \
 		../manguito/mira.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/QWidget \
+		../manguito/piedra.h \
 		release/moc_predefs.h \
 		C:/Qt/6.3.2/mingw_64/bin/moc.exe
 	C:\Qt\6.3.2\mingw_64\bin\moc.exe $(DEFINES) --include "C:/Users/danie/OneDrive - Universidad de Antioquia/2023-1/INFORMÁTICA II/proyectoFinal_InfoII/Codigo/build-manguito-Desktop_Qt_6_3_2_MinGW_64_bit-Debug/release/moc_predefs.h" -IC:/Qt/6.3.2/mingw_64/mkspecs/win32-g++ -I"C:/Users/danie/OneDrive - Universidad de Antioquia/2023-1/INFORMÁTICA II/proyectoFinal_InfoII/Codigo/manguito" -IC:/Qt/6.3.2/mingw_64/include -IC:/Qt/6.3.2/mingw_64/include/QtWidgets -IC:/Qt/6.3.2/mingw_64/include/QtGui -IC:/Qt/6.3.2/mingw_64/include/QtCore -I. -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++ -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/x86_64-w64-mingw32 -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include/c++/backward -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include -IC:/Qt/Tools/mingw1120_64/lib/gcc/x86_64-w64-mingw32/11.2.0/include-fixed -IC:/Qt/Tools/mingw1120_64/x86_64-w64-mingw32/include ..\manguito\mainwindow.h -o release\moc_mainwindow.cpp
@@ -997,6 +1000,7 @@ release/main.o: ../manguito/main.cpp ../manguito/mainwindow.h \
 		../manguito/mono.h \
 		../manguito/mira.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/QWidget \
+		../manguito/piedra.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/QApplication \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qapplication.h \
 		C:/Qt/6.3.2/mingw_64/include/QtCore/qcoreapplication.h \
@@ -1175,6 +1179,7 @@ release/mainwindow.o: ../manguito/mainwindow.cpp ../manguito/mainwindow.h \
 		../manguito/mono.h \
 		../manguito/mira.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/QWidget \
+		../manguito/piedra.h \
 		ui_mainwindow.h \
 		C:/Qt/6.3.2/mingw_64/include/QtCore/QVariant \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/QApplication \
@@ -1203,17 +1208,11 @@ release/mainwindow.o: ../manguito/mainwindow.cpp ../manguito/mainwindow.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qscrollarea.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qabstractscrollarea.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qframe.h \
-		C:/Qt/6.3.2/mingw_64/include/QtWidgets/QGridLayout \
-		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qgridlayout.h \
-		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qlayout.h \
-		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qlayoutitem.h \
-		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qboxlayout.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/QMenuBar \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qmenubar.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qmenu.h \
 		C:/Qt/6.3.2/mingw_64/include/QtWidgets/QStatusBar \
-		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qstatusbar.h \
-		../manguito/piedra.h
+		C:/Qt/6.3.2/mingw_64/include/QtWidgets/qstatusbar.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o release\mainwindow.o ..\manguito\mainwindow.cpp
 
 release/mango.o: ../manguito/mango.cpp ../manguito/mango.h \

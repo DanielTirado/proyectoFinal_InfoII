@@ -36,6 +36,12 @@ MainWindow::~MainWindow()
 void MainWindow::Animar()
 {
     monos[0]->saltar();
+    QList<QGraphicsRectItem*>::Iterator it;
+    for (it=ramas.begin(); it!=ramas.end(); it++){
+        if(monos[0]->collidesWithItem(*it)){
+            monos[0]->flagSaltar=false;
+        }
+    }
 
     /*for (int i=0; i<mangos.length(); i++){
         if (mangos[i]->tambalear) mangos[i]->pendulo();
@@ -56,7 +62,7 @@ void MainWindow::Animar()
 
 void MainWindow::jugar()
 {
-    monos.append(new mono(400, 500, 10, 10));
+    monos.append(new mono(400, 200, 10, 10));
     easyMode->addItem(monos.last());
 
 
@@ -177,7 +183,13 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
+    QPoint po = event->pos();
     if(event->MouseButtonPress){
+
+        /*roca = new piedra(po.x(), po.y(), 30.0);
+        easyMode->addItem(roca);*/
+
+
         QList<mango*>::Iterator it;
         for (it=mangos.begin(); it!=mangos.end(); it++){
             if (miraCursor->collidesWithItem(*it)){

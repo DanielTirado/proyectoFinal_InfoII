@@ -5,7 +5,7 @@ piedra::piedra()
 
 }
 
-piedra::piedra(int x, int y, int r)
+piedra::piedra(float x, float y, float r)
 {
     this->posx=x;
     this->posy=y;
@@ -17,7 +17,7 @@ piedra::piedra(int x, int y, int r)
     fila = 0;
     columnas = 0;
 
-    // pixmap = new QPixmap(":/Imagenes/sprites_pacman.png");
+    pixmap = new QPixmap(":/images/roca_sprites_redimension.png");
 
     timer->start(100);
 
@@ -31,10 +31,12 @@ QRectF piedra::boundingRect() const
 
 void piedra::paint(QPainter *painter, const QStyleOptionGraphicsItem *option, QWidget *widget)
 {
-    painter->drawPixmap(posx,posy,*pixmap,columnas,fila,2*radio,2*radio);
+    painter->drawPixmap(posx+30,posy+30,*pixmap,0,fila,2*radio,2*radio);
 }
 
 void piedra::Actualizacion()
 {
-    // tamaño de sprites
+    fila += 60;
+    if (fila >= 180) fila = 0;
+    //this->hide();
 }

@@ -44,3 +44,8 @@ void mono::saltar()
         setPos(X, Y);
     }
 }
+
+void mono::detener()
+{
+    flagSaltar = false;
+}

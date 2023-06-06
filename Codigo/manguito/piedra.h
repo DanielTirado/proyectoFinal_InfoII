@@ -15,7 +15,7 @@ private:
     float posx, posy, radio, velocidad, fila, columnas;
 public:
     piedra();
-    piedra(int x, int y, int r);
+    piedra(float x, float y, float r);
     QRectF boundingRect() const;
 
     QTimer *timer;

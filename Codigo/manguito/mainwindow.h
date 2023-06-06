@@ -22,6 +22,7 @@
 #include <mango.h>
 #include <mono.h>
 #include <mira.h>
+#include <piedra.h>
 
 using namespace std;
 
@@ -51,6 +52,7 @@ private:
 
 
     mira* miraCursor;
+    piedra* roca;
     QGraphicsRectItem* centroMira;
     QList <mango*> mangos;
     QList <mono*> monos;

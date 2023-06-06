@@ -32,6 +32,7 @@ public:
     void setY(float value);
 
     void saltar();
+    void detener();
     void caidaLibre();
 };
 

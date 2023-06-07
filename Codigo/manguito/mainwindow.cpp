@@ -41,7 +41,7 @@ MainWindow::~MainWindow()
 void MainWindow::Animar()
 {
 
-    if (tiempo==15){
+    if (tiempo==31){
         chrono::seconds tiempoEspera(2);
         this_thread::sleep_for(tiempoEspera);
         ui->graphicsView->setScene(InicioGame);
@@ -135,20 +135,10 @@ void MainWindow::jugar()
     setMouseTracking(true);
     ui->centralwidget->setAttribute(Qt::WA_TransparentForMouseEvents);
 
-    //ui->graphicsView->hide();
-
     ui->graphicsView->setScene(WindowGame);
     timer->start(20);
     relojTimer->start(1000);
     drawNivel(nivel);
-}
-
-void MainWindow::inicio()
-{
-    /*QTimer::singleShot(3000, [this]() {
-        ui->graphicsView->setScene(InicioGame);
-    });*/
-
 }
 
 void MainWindow::drawNivel(char level)
@@ -224,8 +214,8 @@ void MainWindow::drawNivel(char level)
 
         break;
     case '3':
-        cantidad_mangos = 25;
-        cantidad_monos = 15;
+        cantidad_mangos = 18;
+        cantidad_monos = 10;
 
         ui->medio->hide();
         ui->facil->hide();

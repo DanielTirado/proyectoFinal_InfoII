@@ -70,13 +70,11 @@ private:
     char nivel;
 
     mira* miraCursor;
-    QGraphicsRectItem* centroMira;
     QList <mango*> mangos;
     QList <mono*> monos;
     QList <QGraphicsRectItem*> ramas;
 
     void jugar();
-    void inicio();
     void drawNivel(char level);
     void mouseMoveEvent(QMouseEvent *event);
     void mousePressEvent(QMouseEvent *event);

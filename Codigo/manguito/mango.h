@@ -35,9 +35,10 @@ public:
     void setX(float value);
     void setY(float value);
 
+    float getX();
+    float getY();
+
     void caidaLibre();
     void pendulo();
-    void seguirMono(float xMono, float yMono);
-
 };
 #endif // MANGO_H

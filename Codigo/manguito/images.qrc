@@ -6,5 +6,7 @@
         <file>images/mango.png</file>
         <file>images/roca_sprites.png</file>
         <file>images/roca_sprites_redimension.png</file>
+        <file>images/mono.png</file>
+        <file>images/inicio.png</file>
     </qresource>
 </RCC>

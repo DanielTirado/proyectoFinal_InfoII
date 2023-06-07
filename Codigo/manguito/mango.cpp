@@ -42,6 +42,16 @@ void mango::setY(float value)
     posy = value;
 }
 
+float mango::getX()
+{
+    return posx;
+}
+
+float mango::getY()
+{
+    return posy;
+}
+
 void mango::caidaLibre()
 {
     static float Y=0, V=0;
@@ -65,9 +75,3 @@ void mango::pendulo()
     setPos(X, Y);
     }
 }
-
-void mango::seguirMono(float xMono, float yMono)
-{
-    setPos(xMono, yMono+10);
-}
-

@@ -4,7 +4,6 @@
 #include "mango.h"
 #include "mono.h"
 #include "mira.h"
-#include "piedra.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -12,20 +11,26 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    easyMode = new QGraphicsScene(0,0,1080,608);
-    easyMode->setBackgroundBrush(QBrush(QImage(":/images/fondo_arbol_redimension.png")));
-    ui->graphicsView->setScene(easyMode);
-    //easyMode->addRect(easyMode->sceneRect());
+    WindowGame = new QGraphicsScene(0,0,1080,608);
+
+    InicioGame = new QGraphicsScene(0,0,1080,608);
+
+    WindowGame->setBackgroundBrush(QBrush(QImage(":/images/fondo_arbol_redimension.png")));
+
+    InicioGame->setBackgroundBrush(QBrush(QImage(":/images/inicio.png")));
+    ui->dificil->hide();
+    ui->medio->hide();
+    ui->facil->hide();
+    ui->graphicsView->setScene(InicioGame);
 
     timer = new QTimer(this);
+    relojTimer = new QTimer(this);
+
     connect(timer, SIGNAL(timeout()), this, SLOT(Animar()));
+    connect(this,SIGNAL(disparoMango(int)),this,SLOT(aumentarScore()));
+    connect(this,SIGNAL(disparoMono(int)),this,SLOT(restarScore()));
+    connect(relojTimer, SIGNAL(timeout()), this, SLOT(aumentarSeg()));
 
-    timer->start(20);
-    drawNivel('1');
-    jugar();
-
-    setMouseTracking(true);
-    ui->centralwidget->setAttribute(Qt::WA_TransparentForMouseEvents);
 }
 
 MainWindow::~MainWindow()
@@ -35,39 +40,115 @@ MainWindow::~MainWindow()
 
 void MainWindow::Animar()
 {
-    monos[0]->saltar();
-    QList<QGraphicsRectItem*>::Iterator it;
-    for (it=ramas.begin(); it!=ramas.end(); it++){
-        if(monos[0]->collidesWithItem(*it)){
-            monos[0]->flagSaltar=false;
+
+    if (tiempo==15){
+        chrono::seconds tiempoEspera(2);
+        this_thread::sleep_for(tiempoEspera);
+        ui->graphicsView->setScene(InicioGame);
+        ui->dificil->hide();
+        ui->medio->hide();
+        ui->facil->hide();
+
+        ui->pushButton_dificil->show();
+        ui->pushButton_medio->show();
+        ui->pushButton_facil->show();
+
+        relojTimer->stop();
+        timer->stop();
+        setMouseTracking(false);
+        ui->centralwidget->setAttribute(Qt::WA_TransparentForMouseEvents, false);
+
+
+
+        QList<mango*>::Iterator ite;
+        for (ite=mangos.begin(); ite!=mangos.end(); ite++){
+            WindowGame->removeItem(*ite);
+        }
+        QList<QGraphicsRectItem*>::Iterator it;
+        for (it=ramas.begin(); it!=ramas.end(); it++){
+            WindowGame->removeItem(*it);
+        }
+        QList<mono*>::Iterator itMono;
+        for (itMono=monos.begin(); itMono!=monos.end(); itMono++){
+            WindowGame->removeItem(*itMono);
+        }
+
+        WindowGame->removeItem(miraCursor);
+        delete miraCursor;
+
+        monos.clear();
+        mangos.clear();
+        ramas.clear();
+    }
+
+    QList<mono*>::Iterator itMono;
+    for (itMono=monos.begin(); itMono!=monos.end(); itMono++){
+        if ((*itMono)->mover) (*itMono)->saltar();
+        else (*itMono)->caidaLibre();
+
+        QList<QGraphicsRectItem*>::Iterator it;
+        for (it=ramas.begin(); it!=ramas.end(); it++){
+            if((*itMono)->collidesWithItem(*it)) (*itMono)->cambio();
         }
     }
 
-    /*for (int i=0; i<mangos.length(); i++){
-        if (mangos[i]->tambalear) mangos[i]->pendulo();
-        else mangos[i]->caidaLibre();
-    }*/
     QList<mango*>::Iterator ite;
     for (ite=mangos.begin(); ite!=mangos.end(); ite++){
         if((*ite)->tambalear) (*ite)->pendulo();
-        else{
-            (*ite)->caidaLibre();
-            //mangos.erase(ite);
-        }
+        else (*ite)->caidaLibre();
     }
-
 
     miraCursor->posicion();
 }
 
+void MainWindow::aumentarScore()
+{
+    score += 3;
+    ui->lcdScore->display(score);
+}
+
+void MainWindow::restarScore()
+{
+    if (score>3) score -= 3;
+    else score = 0;
+    ui->lcdScore->display(score);
+}
+
+void MainWindow::aumentarSeg()
+{
+    tiempo += 1;
+    ui->lcdTime->display(tiempo);
+}
+
 void MainWindow::jugar()
 {
-    monos.append(new mono(400, 200, 10, 10));
-    easyMode->addItem(monos.last());
+    score = 0;
+    tiempo = 0;
 
+    ui->lcdScore->display(score);
+    ui->lcdTime->display(tiempo);
 
-    miraCursor = new mira(500, 500, 15);
-    easyMode->addItem(miraCursor);
+    ui->pushButton_dificil->hide();
+    ui->pushButton_medio->hide();
+    ui->pushButton_facil->hide();
+
+    setMouseTracking(true);
+    ui->centralwidget->setAttribute(Qt::WA_TransparentForMouseEvents);
+
+    //ui->graphicsView->hide();
+
+    ui->graphicsView->setScene(WindowGame);
+    timer->start(20);
+    relojTimer->start(1000);
+    drawNivel(nivel);
+}
+
+void MainWindow::inicio()
+{
+    /*QTimer::singleShot(3000, [this]() {
+        ui->graphicsView->setScene(InicioGame);
+    });*/
+
 }
 
 void MainWindow::drawNivel(char level)
@@ -104,39 +185,13 @@ void MainWindow::drawNivel(char level)
         _h = stoi(linea);
 
         ramas.append(new QGraphicsRectItem(_x,_y, _w, _h));
-        easyMode->addItem(ramas.back());
+        WindowGame->addItem(ramas.back());
         ramas.back()->hide();
     }
     F_ramas.close();
 
 
-    /* Dibujar Mangos
-    ifstream F_mangos;
-
-    F_ramas.open(fileLevel);
-
-    while(F_mangos.good()){
-        getline(F_mangos, linea);
-
-        int pos = 0;
-        string numero;
-
-        pos = linea.find(":");
-        numero = linea.substr(0, pos);
-        _x = stoi(numero);
-        linea.erase(0, pos + 1);
-
-        pos = linea.find(":");
-        numero = linea.substr(0, pos);
-        _y = stoi(numero);
-        linea.erase(0, pos + 1);
-
-        mangos.append(new mango(_x,_y,20,25,40));
-        easyMode->addItem(mangos.last());
-    }
-    F_mangos.close();*/
-
-
+    //Dibujar Mangos
     random_device rd;
     mt19937 rng(rd());
     int min_X = 20;
@@ -148,30 +203,61 @@ void MainWindow::drawNivel(char level)
     uniform_real_distribution<float> uni3(0.1, 0.5);
 
     int cantidad_mangos = 0;
+    int cantidad_monos = 0;
     switch (level) {
     case '1':
-        cantidad_mangos = 20;
+        cantidad_mangos = 25;
+        cantidad_monos = 3;
+
+        ui->dificil->hide();
+        ui->medio->hide();
+        ui->facil->show();
+
         break;
     case '2':
-        cantidad_mangos = 15;
+        cantidad_mangos = 25;
+        cantidad_monos = 10;
+
+        ui->dificil->hide();
+        ui->facil->hide();
+        ui->medio->show();
+
         break;
     case '3':
-        cantidad_mangos = 10;
+        cantidad_mangos = 25;
+        cantidad_monos = 15;
+
+        ui->medio->hide();
+        ui->facil->hide();
+        ui->dificil->show();
+
         break;
     default:
         break;
     }
 
+    int posX=0;
+    int posY=0;
     for (int i=0; i<cantidad_mangos; i++){
-        int posX = uni1(rng);
-        int posY = uni2(rng);
+        posX = uni1(rng);
+        posY = uni2(rng);
         float dt = uni3(rng);
 
         mangos.append(new mango(posX,posY,20,25,40,dt));
-        easyMode->addItem(mangos.last());
+        WindowGame->addItem(mangos.last());
     }
 
+    //Dibujar monos
+    for (int i=0; i<cantidad_monos; i++){
+        posX = uni1(rng);
+        posY = uni2(rng);
+        monos.append(new mono(posX, posY, 80, 102));
+        WindowGame->addItem(monos.last());
+    }
 
+    //Dibujar Mira
+    miraCursor = new mira(500, 500, 15);
+    WindowGame->addItem(miraCursor);
 }
 
 void MainWindow::mouseMoveEvent(QMouseEvent *event)
@@ -183,18 +269,42 @@ void MainWindow::mouseMoveEvent(QMouseEvent *event)
 
 void MainWindow::mousePressEvent(QMouseEvent *event)
 {
-    QPoint po = event->pos();
+
     if(event->MouseButtonPress){
-
-        /*roca = new piedra(po.x(), po.y(), 30.0);
-        easyMode->addItem(roca);*/
-
-
         QList<mango*>::Iterator it;
         for (it=mangos.begin(); it!=mangos.end(); it++){
             if (miraCursor->collidesWithItem(*it)){
                 (*it)->tambalear = false;
+                emit disparoMango(9);
+            }
+        }
+
+        QList<mono*>::Iterator itMono;
+        for (itMono=monos.begin(); itMono!=monos.end(); itMono++){
+            if (miraCursor->collidesWithItem(*itMono)){
+                (*itMono)->mover = false;
+                emit disparoMono(9);
             }
         }
     }
 }
+
+void MainWindow::on_pushButton_facil_clicked()
+{
+    nivel='1';
+    jugar();
+}
+
+void MainWindow::on_pushButton_medio_clicked()
+{
+    nivel='2';
+    jugar();
+}
+
+
+void MainWindow::on_pushButton_dificil_clicked()
+{
+    nivel='3';
+    jugar();
+}
+
